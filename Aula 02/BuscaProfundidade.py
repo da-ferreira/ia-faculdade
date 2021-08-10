@@ -1,6 +1,6 @@
+
 from Estado import Estado
 from No import No
-
 
 class BuscaEmProfundidade():
     """
@@ -8,7 +8,6 @@ class BuscaEmProfundidade():
     """
     def __init__(self):
         self.achou = False
-        
     
     def busca(self):
         """
@@ -24,7 +23,6 @@ class BuscaEmProfundidade():
         self.DFS(noRaiz)
         
         noRaiz.printArvore()
-        
     
     def DFS(self, no):
         """
@@ -49,6 +47,6 @@ class BuscaEmProfundidade():
                     # faz a busca em um dos nós filhos
                     self.DFS(noFilho)
         
-        
 dfs = BuscaEmProfundidade()
 dfs.busca()
+ 
