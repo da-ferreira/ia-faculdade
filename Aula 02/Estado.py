@@ -1,16 +1,18 @@
+
 import os 
 
 class Estado:
-    """
+    '''
     Esta classe recupera informações do estado para o aplicativo de busca
-    """
+    '''
     
-    def __init__(self, path=None):
-        if path == None:
+    # Construtor
+    def __init__(self, caminho = None):  
+        if caminho == None:
             #cria o estado inicial
-            self.path = self.getEstadoInicial()
+            self.caminho = self.getEstadoInicial()
         else:
-            self.path = path
+            self.caminho = caminho
     
     def getEstadoInicial(self):
         """
@@ -24,8 +26,8 @@ class Estado:
         Esta é a função sucessora. Gera todo os possiveis
         caminhos que podem ser alcançados a partir do caminho atual.
         """
-        if os.path.isdir(self.path):
-            lista = [os.path.join(self.path, x) for x in sorted(os.listdir(self.path))]
+        if os.path.isdir(self.caminho): #verifica se eh um diretório
+            lista = [os.path.join(self.caminho, x) for x in sorted(os.listdir(self.caminho))]
             return lista
         else:
             return []
@@ -33,16 +35,18 @@ class Estado:
     def funcaoObjetivo(self):
         """
         Este método verifica se o caminho está no estado objetivo
-        """ 
-        #verifica de é uma pasta
-        if os.path.isdir(self.path):
+        """
+
+        #verifica se é uma pasta
+        if os.path.isdir(self.caminho):
             return False
-        else:
-            #separa o nome do arquivo
-            fileSeparatorIndex = self.path.rfind(os.sep)
-            filename = self.path[fileSeparatorIndex + 1 : ]
-            if filename == "f211.txt":
+        else:#é um arquivo
+            
+            #separa o nome do arquivo do caminho
+            indiceBarra = self.caminho.rfind(os.sep)
+            nomeArquivo = self.caminho[indiceBarra + 1 :  ]
+            
+            if nomeArquivo == "f31.txt":
                 return True
             else:
-                return False  
-          
+                return False        

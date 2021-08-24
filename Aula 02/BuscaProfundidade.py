@@ -4,17 +4,17 @@ from No import No
 
 class BuscaEmProfundidade():
     """
-    Essa clase executa uma Busca em Profundidade Recursiva
+    Essa classe executa uma Busca em Profundidade Recursiva
     """
     def __init__(self):
         self.achou = False
-    
+        
     def busca(self):
         """
-       Este método realiza a busca
+        Este método inicia a busca
         """
         #pega o estado inicial
-        estadoInicial = Estado('/home/ec2-user/environment/DiretorioInicial')
+        estadoInicial = Estado('C:/Users/Home/Desktop/CC - 4°/Inteligência Artificial/IA Algoritmos/Aula 02/DiretorioInicial')
         
         #cria o nó raiz
         noRaiz = No(estadoInicial)
@@ -23,13 +23,13 @@ class BuscaEmProfundidade():
         self.DFS(noRaiz)
         
         noRaiz.printArvore()
-    
+        
     def DFS(self, no):
         """
         Isso cria a árvore de busca
         """
         if not self.achou:
-            print ("-- proc --", no.estado.path)
+            print ("-- proc --", no.estado.caminho)
             
             # verifica se foi atingido o estado meta
             if no.estado.funcaoObjetivo():
@@ -46,7 +46,4 @@ class BuscaEmProfundidade():
                     no.addFilho(noFilho) 
                     # faz a busca em um dos nós filhos
                     self.DFS(noFilho)
-        
-dfs = BuscaEmProfundidade()
-dfs.busca()
- 
+          
