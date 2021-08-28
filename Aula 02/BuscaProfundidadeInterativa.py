@@ -12,7 +12,7 @@ def buscaEmProfundidadeInterativa():
     pilha = []
     
     #cria o no raiz e o coloca na pilha
-    estadoInicial = Estado('C:\Users\Home\Desktop\CC - 4°\Inteligência Artificial\IA Algoritmos\Aula 02\DiretorioInicial')
+    estadoInicial = Estado('C:/Users/Home/Desktop/CC - 4°/Inteligência Artificial/IA Algoritmos/Aula 02/DiretorioInicial')
     raiz = No(estadoInicial)
     pilha.append(raiz)
     
@@ -44,3 +44,6 @@ def buscaEmProfundidadeInterativa():
     print ("----------------------")
     raiz.printArvore()
     
+    
+if __name__ == "__main__":
+    buscaEmProfundidadeInterativa()
