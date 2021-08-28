@@ -20,7 +20,7 @@ class No:
     def printArvore(self):
         """ Este método imprime a sub-árvore a partir desse nó """
 
-        print(self.profundidade, " - " , self.estado.nome)
+        print(f"Profundidade: {self.profundidade} - {self.estado.nome}")
         
         for umFilho in self.filhos:
             umFilho.printArvore()

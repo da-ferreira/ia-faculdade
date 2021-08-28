@@ -4,57 +4,47 @@ from Estado import Estado
 from collections import deque
 
 def executaBFS():
-    """
-    Esta função executa a pesquisa BFS usando uma fila
-    """
-    #criar fila
+    """ Esta função executa a pesquisa BFS usando uma fila """
+    
     fila = deque([])
+    visitados = []   # Por ser um gráfico, criamos uma lista de visitantes
     
-    #por ser um gráfico, criamos uma lista de visitantes
-    visitados = []
-    
-    #criar nó raiz
-    estadoInicial = Estado()
+    # Cria nó raiz
+    estadoInicial = Estado()  
     raiz = No(estadoInicial)
-    #adicionar à fila e lista de visitados
-    fila .append(raiz)    
-    visitados.append(raiz.estado.nome)
     
-    # verifique se há algo na para retirar da fila (dar o  dequeue)
-    while len(fila) > 0:
+    # Adiciona à fila e a lista de visitados
+    fila.append(raiz)    
+    visitados.append(raiz.estado.nome)
         
-        #obtem o primeiro item da fila
-        noAtual = fila.popleft()
+    while len(fila) > 0:          # Verifica se há algo para retirar da fila (dar o  dequeue)        
+        noAtual = fila.popleft()  # Obtem o primeiro item da fila
         
         print ("-- dequeue --", noAtual.estado.nome)
         
-        #verifica se é o estado meta
-        if noAtual.estado.funcaoObjetivo():
+        if noAtual.estado.funcaoObjetivo():  # Verifica se é o estado meta (o estado a ser buscado)
             print ("Atingiu o estado objetivo")
-            #faz o print do caminho
+            
+            # Faz o print do caminho
             print ("----------------------")
-            print ("Caminho")
+            print ("Caminho:")
             noAtual.printCaminho()
             break
             
-        #pega os nos filhos
-        estadosFilhos = noAtual.estado.funcaoSucessora()
-        for estadoFilho in estadosFilhos:
-            
+        estadosFilhos = noAtual.estado.funcaoSucessora()  # Pega os nos filhos
+        
+        for estadoFilho in estadosFilhos:    
             noFilho = No(Estado(estadoFilho))
-            
-            #verifica se o no ainda não foi visitado
-            if noFilho.estado.nome not in visitados:
+                        
+            if noFilho.estado.nome not in visitados:   # Verifica se o nó ainda não foi visitado
+                visitados.append(noFilho.estado.nome)  # Coloca na lista de nos visitados
                 
-                #coloca na lista de nos visitados
-                visitados.append(noFilho.estado.nome )
-                
-                #coloca na arvore e na fila
+                # Coloca na arvore e na fila
                 noAtual.addFilho(noFilho)
                 fila.append(noFilho)       
             
-    #print arvore
+    # Printa a árvore
     print ("----------------------")
-    print ("Arvore")
+    print ("Arvore:")
     raiz.printArvore()  
   
