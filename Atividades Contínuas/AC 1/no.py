@@ -58,5 +58,5 @@ class No:
         distancia = math.sqrt(dx ** 2 + dy ** 2)                  # Distancia
         self.heuristica = distancia
 
-        print(f"Função heurística para {self.estado.lugar}: {distancia}")
+        print(f"Função heurística para '{self.estado.lugar}': {distancia}")
           

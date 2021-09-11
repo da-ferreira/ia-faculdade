@@ -40,6 +40,7 @@ def executaBuscaBestFirst():
             if estado_filho not in visitado:                          # Verifica se o nó ainda nao foi visitado
                 no_filho = No(Estado(estado_filho), no_atual)         # Cria um nó e coloca na arvore
                 fila_prioridade.put((no_filho.heuristica, no_filho))  # Coloca na fila de prioridade
+                visitado.append(estado_filho)                         # Coloca o estado filho na lista de visitados
                 
     print("-" * 58)
     print("Arvore:")
