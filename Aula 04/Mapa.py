@@ -8,10 +8,10 @@ conexoes = {
 	"Deposito Insumos 1":    {"Estacao 1"},
 	"Deposito Insumos 2":    {"Estacao 1", "Estoque Intermediario" , "Estacao 2"},
 	"Estoque Pronto":        {"Estacao 4", "Estoque Intermediario", "Carregamento"},
-	"Estacao 1": 			 {"Deposito Insumos 1", "Deposito Insumos 2","Home e Energia"},
-	"Estacao 2": 		     {"Deposito Insumos 2", "Estacao 3"},
-	"Estacao 3": 			 {"Estacao 2", "Estoque Intermediario"},
-	"Estacao 4": 			 {"Home e Energia", "Estoque Pronto"}
+	"Estacao 1":             {"Deposito Insumos 1", "Deposito Insumos 2","Home e Energia"},
+	"Estacao 2":             {"Deposito Insumos 2", "Estacao 3"},
+	"Estacao 3":             {"Estacao 2", "Estoque Intermediario"},
+	"Estacao 4":             {"Home e Energia", "Estoque Pronto"}
 }
 
 # Localização (coordenadas x, y do mapa topológico) de todos os lugares 
