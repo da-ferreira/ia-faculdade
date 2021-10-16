@@ -2,15 +2,18 @@
 import random
 from deap import base, creator, tools
 
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 #constantes do problema:
-TAMANHO_ONE_MAX = 100     # tamanho da string
+TAMANHO_ONE_MAX = 600     # tamanho da string
 
 #constantes do algoritmo genético:
 TAMANHO_POPULACAO = 200    #tamanho da populacao
 P_CROSSOVER = 0.9          #probabilidade de crossover
 P_MUTACAO = 0.1            #probabilidade de mutacao em um individuo
                        
-MAX_GERACAO = 50     # numero maximo de geracoes
+MAX_GERACAO = 600     # numero maximo de geracoes
 
 #inicia a toolbox                         
 toolbox = base.Toolbox()
@@ -27,7 +30,7 @@ toolbox.register("individualCreator", tools.initRepeat,
 
 #seed do gerador de numeros aleatorios 
 RANDOM_SEED = 7
-random.seed(RANDOM_SEED)
+#random.seed(RANDOM_SEED)
 
 #define a populacao como uma lista de indivíduos
 toolbox.register("populationCreator", tools.initRepeat, 
@@ -112,11 +115,21 @@ def main():
         fitnessMedio = sum(valoresFitness) / len(population)
         maxValoresFitness.append(maxFitness)
         valoresFitnessMedios.append(fitnessMedio)
-        print("- Geracao{}: Max Fitness = {}, Fitness Media = {}".format(contadorDeGeracao, maxFitness, fitnessMedio))
+        print("- Geração {}: Max Fitness = {}, Fitness Media = {}".format(contadorDeGeracao, maxFitness, fitnessMedio))
 
-        #encontre e imprima o melhor indivíduo:
-        indice_melhor = valoresFitness.index(max(valoresFitness))
-        print("Melhor Individuo = ", *population[indice_melhor], "\n")
+        # Encontre e imprima o melhor indivíduo:
+        #indice_melhor = valoresFitness.index(max(valoresFitness))
+        #print("Melhor Individuo = ", *population[indice_melhor], "\n")
+    
+    sns.set_style("whitegrid")
+    plt.plot(maxValoresFitness, color='red', label='Fitness Máxima')
+    plt.plot(valoresFitnessMedios, color='green', label='Média fitness')
+    plt.xlabel('Gerações')
+    plt.ylabel('Fitness Máxima / Média')
+    plt.title('Fitness máxima e média ao longo das gerações')
+
+    plt.legend(fontsize=12, loc=4)
+    plt.show()
 
 
 if __name__ == '__main__':
