@@ -12,18 +12,18 @@ import seaborn as sns
 import queens
 
 
-NR_QUEENS = 16
+NR_QUEENS = 10
 
 # Constantes do algoritmo genetico:
 TAMANH0_POPULACAO = 300
-MAX_GENERACOES = 100
+MAX_GENERACOES = 200
 TAMANHO_HALL_OF_FAME = 30
 P_CROSSOVER = 0.9  # probabilidade de  crossover
 P_MUTATION = 0.1   # probabilidade de mutacao em um individuo
 
 # >>>>> REMOVER <<<<<<
 RANDOM_SEED = 42
-random.seed(RANDOM_SEED)
+#random.seed(RANDOM_SEED)
 
 # cria o N-Queens desejado
 nQueens = queens.NQueens(NR_QUEENS)
@@ -91,14 +91,15 @@ def main():
     valoresMinimosDeFitness, valoresMediosDeFitness = logbook.select("min", "med")
     plt.figure(1)
     sns.set_style("whitegrid")
-    plt.plot(valoresMinimosDeFitness, color='red')
-    plt.plot(valoresMediosDeFitness, color='green')
+    plt.plot(valoresMinimosDeFitness, color='red', label='Fitness mínima')
+    plt.plot(valoresMediosDeFitness, color='green', label='Média fitness')
     plt.xlabel('Generation')
     plt.ylabel('Fitness Mínima / Média')
-    plt.title('Fidness mínima e média ao longo das gerações')
+    plt.title('Fitness mínima e média ao longo das gerações')
 
     # desenha a melhor solucao:
     sns.set_style("whitegrid", {'axes.grid' : False})
+    plt.legend(fontsize=12, loc=1)
     nQueens.desenhaTabuleiro(hof.items[0])
     plt.show()
 
