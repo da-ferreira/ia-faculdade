@@ -1,3 +1,4 @@
+
 from deap import base
 from deap import creator
 from deap import tools
@@ -20,7 +21,7 @@ TAMANHO_HALL_OF_FAME = 30
 P_CROSSOVER = 0.9  # probabilidade de  crossover
 P_MUTATION = 0.1   # probabilidade de mutacao em um individuo
 
-# >>>>>REMOVER<<<<<<
+# >>>>> REMOVER <<<<<<
 RANDOM_SEED = 42
 random.seed(RANDOM_SEED)
 
@@ -45,7 +46,7 @@ toolbox.register("individualCreator", tools.initIterate,
 # cria o operador de criacao de populacao para gerar uma lista de individuos
 toolbox.register("polulacaoCreator", tools.initRepeat, list, toolbox.individualCreator)
 
-# calcula de aptidão 
+# calculo de aptidão 
 def totalViolacoes(individual):
     # retorna um tupla
     return nQueens.getNumeroDeViolacao(individual),
@@ -81,6 +82,7 @@ def main():
     #        ngen=MAX_GENERACOES, stats=estatistica, 
     #        halloffame=hof, verbose=True)
     # print informacoe dos membor do hall da fama:
+    
     print("- As melhores soluções são:")
     for i in range(TAMANHO_HALL_OF_FAME):
         print(i, ": ", hof.items[i].fitness.values[0], " -> ", hof.items[i])

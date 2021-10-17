@@ -19,15 +19,14 @@ class NQueens:
 
     def getNumeroDeViolacao(self, posicoes):
         """
-         Calcula o numero de violacoes na solucao dada
-         Uma vez que a entrada contem indices exclusivos de colunas para cada linha, 
-        nenhuma violacao de linha ou coluna eh possível,
-         Apenas as violacoes diagonais precisam ser contadas.
+        Calcula o numero de violacoes na solucao dada, uma vez que a entrada contem
+        indices exclusivos de colunas para cada linha, nenhuma violacao de linha
+        ou coluna eh possível, apenas as violacoes diagonais precisam ser contadas.
         """
 
         violacao = 0
 
-        # itera sobre cada par de rainhas e descubra se eles estão na mesma diagonal:
+        # itera sobre cada par de rainhas e descobre se eles estão na mesma diagonal:
         for i in range(len(posicoes)):
             for j in range(i + 1, len(posicoes)):
 
@@ -87,7 +86,7 @@ def main():
     #solucao = [5, 0, 4, 1, 7, 2, 6, 3]
 
     # uma solucao com 3 violacoes:
-    solucao = [1, 2, 7, 5, 0, 3, 4, 6]
+    solucao = [5, 3, 4, 1, 7, 2, 6, 0]
 
     print("Numero de violacoes = ", nQueens.getNumeroDeViolacao(solucao))
 
