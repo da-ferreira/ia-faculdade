@@ -1,3 +1,4 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
@@ -61,7 +62,7 @@ class NQueens:
         ax.imshow(tabuleiro, interpolation='none', cmap=mpl.colors.ListedColormap(['#ffc794', '#4c2f27']))
 
         # leia a miniatura da imagem da rainha e da uma margem de 70% das dimensoes do quadrado:
-        queenThumbnail = plt.imread('./Aula08/queen-thumbnail.png')
+        queenThumbnail = plt.imread('C:/Users/Home/Desktop/CC - 4°/Inteligência Artificial/IA Algoritmos/Aula 08/queen-thumbnail.png')
         thumbnailSpread = 0.70 * np.array([-1, 1, -1, 1]) / 2  
 
         # itera sobre as posições da rainha (i é a linha, j é a coluna):
