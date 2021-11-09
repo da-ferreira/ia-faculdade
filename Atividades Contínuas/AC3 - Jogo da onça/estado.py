@@ -21,7 +21,7 @@ class Estado:
             'b5': ['$', 'a5', 'c5', 'b4'],
             'c1': ['$', 'b1', 'b2', 'c2', 'd1', 'd2',],
             'c2': ['$', 'c1', 'c3', 'b2', 'd2',],
-            'c3': ['c', 'b2', 'b3', 'b4', 'c2', 'c4', 'd2', 'd3', 'd4'],
+            'c3': ['C', 'b2', 'b3', 'b4', 'c2', 'c4', 'd2', 'd3', 'd4'],
             'c4': ['$', 'c3', 'c5', 'b4', 'd4', ],
             'c5': ['$', 'b5', 'd5', 'c4', 'b4', 'd4'],
             'd1': ['o', 'd2', 'c1', 'e1'],
@@ -48,9 +48,11 @@ class Estado:
         jogador 0 é cachorro e 1 é onça.
         """
 
-        if jogador == 0:
-            return [posicao for posicao in self.tabuleiro[estado][1:] if self.tabuleiro[posicao][0] == 'o']
-        else:
+        estados = []
+
+        if jogador == 0:  # Cachorro
+            posicoes_cachorros = [posicao for posicao in self.tabuleiro[estado][1:] if self.tabuleiro[posicao][0] == 'o']
+        else:  # Onça
             pass
 
     def funcaoObjetivo(self):
@@ -59,5 +61,8 @@ class Estado:
 
 if __name__ == "__main__":
     estado = Estado()
-    print(estado.tabuleiro)
-    print(estado.funcaoSucessora('c3'))
+    estado.tabuleiro['c3'][0] = 'o'
+    estado.tabuleiro['d3'][0] = 'C'
+    estado.tabuleiro['c4'][0] = 'o'
+    estado.tabuleiro['d4'][0] = '$'
+    print(estado.funcaoSucessora('d3', 1))
