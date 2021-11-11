@@ -41,7 +41,7 @@ class Estado:
             '64': ['o', '63', '53', '75',],
             '71': ['o', '73', '62'],
             '73': ['o', '71', '75', '63'],
-            '75': ['o', '73', '64'],
+            '75': ['o', '73', '64']
         }  
 
     def funcaoSucessora(self, estado, jogador=0):
@@ -53,7 +53,18 @@ class Estado:
         estados = []
 
         if jogador == 0:  # Cachorro
-            posicoes_cachorros = [posicao for posicao in self.tabuleiro[estado][1:] if self.tabuleiro[posicao][0] == 'o']
+            posicoes_cachorros = self.pegaPosicoesCachorros()
+            
+            for i in posicoes_cachorros:
+                for j in self.tabuleiro[i][1:]:
+                    if self.tabuleiro[j][0] == 'o':
+                        novoTabuleiro = deepcopy(self.tabuleiro)
+                        
+                        novoTabuleiro[i][0] = 'o'
+                        novoTabuleiro[j][0] = '$'
+                        
+                        estados.append(novoTabuleiro)
+
         else:  # Onça
             posicoes_onca = [posicao for posicao in self.tabuleiro[estado][1:] if self.tabuleiro[posicao][0] in 'o$']
             
@@ -125,13 +136,57 @@ class Estado:
 
         return None
             
+    def pegaPosicoesCachorros(self):
+        posicoes = []
+        chaves = list(self.tabuleiro.keys())
+
+        for i in chaves:
+            if self.tabuleiro[i][0] == "$":
+                posicoes.append(i)
+        
+        return posicoes
+
+    def pegaPosicaoOnca(self):
+        chaves = list(self.tabuleiro.keys())
+
+        for i in chaves:
+            if self.tabuleiro[i][0] == "C":
+                return i
+                
+    def cachorrosVenceram(self):
+        onca = self.pegaPosicaoOnca()
+        vizinhos_onca = self.tabuleiro[onca][1:]
+        posicoes_de_fuga_onca = []
+
+        for i in vizinhos_onca:
+            if self.tabuleiro[i][0] == 'o':
+                return False
+
+        for i in vizinhos_onca:
+            if self.tabuleiro[i][0] == "$":     
+                temp = self._proximaCasa(onca, i)
+                if temp is not None and self.tabuleiro[temp][0] == 'o' :
+                    posicoes_de_fuga_onca.append(temp)
+                
+        return len(posicoes_de_fuga_onca) == 0        
+
+    def oncaVenceu(self):
+        numero_cachorros = self.pegaPosicoesCachorros()
+        return len(numero_cachorros) <= 9
+            
+
 if __name__ == "__main__":
     estado = Estado()
-    estado.tabuleiro['33'][0] = 'o'
-    estado.tabuleiro['43'][0] = 'C'
-    estado.tabuleiro['34'][0] = 'o'
-    estado.tabuleiro['44'][0] = '$'
-    print(estado.tabuleiro['44'])
-    print(estado._proximaCasa('75', '64'))
-    print(estado.funcaoSucessora('43', 1))
-    print(len(estado.funcaoSucessora('43', 1)))
+    
+    #estado.tabuleiro['33'][0] = 'o'
+    #estado.tabuleiro['11'][0] = 'C'
+    #estado.tabuleiro['31'][0] = 'o'
+    #estado.tabuleiro['34'][0] = 'o'
+    #estado.tabuleiro['44'][0] = '$'
+    
+    #print(estado.tabuleiro['44'])
+    
+    #print(estado.funcaoSucessora('', 0))
+    #print(len(estado.funcaoSucessora('', 0)))
+
+    print(estado.funcaoObjetivo())
