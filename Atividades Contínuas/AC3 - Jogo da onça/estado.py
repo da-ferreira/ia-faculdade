@@ -1,4 +1,6 @@
 
+from copy import deepcopy
+
 class Estado:
     def __init__(self, tabuleiro=None):
         if tabuleiro is not None:
@@ -9,37 +11,37 @@ class Estado:
     def estadoInicial(self):
         """ Retorna o estado inicial com o tabuleiro padrão. """
         return {
-            'a1': ['$', 'a2', 'b1', 'b2'],
-            'a2': ['$', 'a1', 'a3', 'b2'],
-            'a3': ['$', 'a2', 'a4', 'b2', 'b4'],
-            'a4': ['$', 'a3', 'a5', 'b4'],
-            'a5': ['$', 'a4', 'b5', 'b4',],
-            'b1': ['$', 'a1', 'c1', 'b2'],
-            'b2': ['$', 'b1', 'a1', 'a2', 'a3', 'b3', 'c1', 'c2', 'c3'],
-            'b3': ['$', 'b2', 'a3', 'b4', 'c3'],
-            'b4': ['$', 'b3', 'b5', 'a3', 'a4', 'a5', 'c3', 'c4', 'c5'],
-            'b5': ['$', 'a5', 'c5', 'b4'],
-            'c1': ['$', 'b1', 'b2', 'c2', 'd1', 'd2',],
-            'c2': ['$', 'c1', 'c3', 'b2', 'd2',],
-            'c3': ['C', 'b2', 'b3', 'b4', 'c2', 'c4', 'd2', 'd3', 'd4'],
-            'c4': ['$', 'c3', 'c5', 'b4', 'd4', ],
-            'c5': ['$', 'b5', 'd5', 'c4', 'b4', 'd4'],
-            'd1': ['o', 'd2', 'c1', 'e1'],
-            'd2': ['o', 'd1', 'd3', 'c1', 'c2', 'c3', 'e1', 'e2', 'e3'],
-            'd3': ['o', 'd2', 'd4', 'c3', 'e3'],
-            'd4': ['o', 'd3', 'd5', 'c3', 'c4', 'c5', 'e3', 'e4', 'e5'],
-            'd5': ['o', 'd4', 'c5', 'e5'],
-            'e1': ['o', 'd1', 'd2', 'e2'],
-            'e2': ['o', 'e1', 'e3', 'd2',],
-            'e3': ['o', 'e2', 'e4', 'd2', 'd3', 'd4', 'f2', 'f3', 'f4'],
-            'e4': ['o', 'e3', 'e5', 'd4'],
-            'e5': ['o', 'e4', 'd4', 'd5'],
-            'f2': ['o', 'e3', 'g1', 'f3'],
-            'f3': ['o', 'f2', 'f4', 'e3', 'g3'],
-            'f4': ['o', 'f3', 'e3', 'g5',],
-            'g1': ['o', 'g3', 'f2'],
-            'g3': ['o', 'g1', 'g5', 'f3'],
-            'g5': ['o', 'g3', 'f4'],
+            '11': ['$', '12', '21', '22'],
+            '12': ['$', '11', '13', '22'],
+            '13': ['$', '12', '14', '22', '24'],
+            '14': ['$', '13', '15', '24'],
+            '15': ['$', '14', '25', '24',],
+            '21': ['$', '11', '31', '22'],
+            '22': ['$', '21', '11', '12', '13', '23', '31', '32', '33'],
+            '23': ['$', '22', '13', '24', '33'],
+            '24': ['$', '23', '25', '13', '14', '15', '33', '34', '35'],
+            '25': ['$', '15', '35', '24'],
+            '31': ['$', '21', '22', '32', '41', '42',],
+            '32': ['$', '31', '33', '22', '42',],
+            '33': ['C', '22', '23', '24', '32', '34', '42', '43', '44'],
+            '34': ['$', '33', '35', '24', '44', ],
+            '35': ['$', '25', '45', '34', '24', '44'],
+            '41': ['o', '42', '31', '51'],
+            '42': ['o', '41', '43', '31', '32', '33', '51', '52', '53'],
+            '43': ['o', '42', '44', '33', '53'],
+            '44': ['o', '43', '45', '33', '34', '35', '53', '54', '55'],
+            '45': ['o', '44', '35', '55'],
+            '51': ['o', '41', '42', '52'],
+            '52': ['o', '51', '53', '42',],
+            '53': ['o', '52', '54', '42', '43', '44', '62', '63', '64'],
+            '54': ['o', '53', '55', '44'],
+            '55': ['o', '54', '44', '45'],
+            '62': ['o', '53', '71', '63'],
+            '63': ['o', '62', '64', '53', '73'],
+            '64': ['o', '63', '53', '75',],
+            '71': ['o', '73', '62'],
+            '73': ['o', '71', '75', '63'],
+            '75': ['o', '73', '64'],
         }  
 
     def funcaoSucessora(self, estado, jogador=0):
@@ -53,16 +55,83 @@ class Estado:
         if jogador == 0:  # Cachorro
             posicoes_cachorros = [posicao for posicao in self.tabuleiro[estado][1:] if self.tabuleiro[posicao][0] == 'o']
         else:  # Onça
-            pass
+            posicoes_onca = [posicao for posicao in self.tabuleiro[estado][1:] if self.tabuleiro[posicao][0] in 'o$']
+            
+            for position in posicoes_onca:
+                novoTabuleiro = deepcopy(self.tabuleiro)
+                
+                if novoTabuleiro[position][0] == '$':
+                    proxima_casa = self._proximaCasa(estado, position)
+
+                    if proxima_casa is not None:
+                        novoTabuleiro[estado][0] = 'o'
+                        novoTabuleiro[position][0] = 'o'
+                        novoTabuleiro[proxima_casa][0] = 'C'
+
+                        estados.append(novoTabuleiro)
+                else:
+                    novoTabuleiro[estado][0] = 'o'
+                    novoTabuleiro[position][0] = 'C'
+                    estados.append(novoTabuleiro)
+
+        return estados                    
 
     def funcaoObjetivo(self):
         """ Verifica se está no estado objetivo, ou seja, se venceu o jogo. """
         return self.cachorrosVenceram() or self.oncaVenceu()
 
+    def _proximaCasa(self, onca, cachorro):
+        """ Retorna a proxima casa da onça quando seu vizinho for um cachorro. """
+
+        if onca in ['62', '64', '71', '75'] and onca[0] == cachorro[0]:
+            if onca == '62':
+                return '64'
+            
+            if onca == '62':
+                return '62'
+
+            if onca == '71':
+                return '75'
+            
+            if onca == '75':
+                return '71'
+
+        onca = [int(onca[0]), int(onca[1])]
+        cachorro = [int(cachorro[0]), int(cachorro[1])]
+
+        if onca[0] == cachorro[0] and onca[1] < cachorro[1] and onca[1] < 4:  # Estão na mesma linha e cachorro ta na frente
+            return str(onca[0]) + str(onca[1] + 2)
+        
+        if onca[0] == cachorro[0] and onca[1] > cachorro[1] and onca[1] > 2:  # Estão na mesma linha e cachorro ta na atras
+            return str(onca[0]) + str(onca[1] - 2)
+
+        if onca[1] == cachorro[1] and onca[0] > cachorro[0] and onca[0] > 2:  # Estão na mesma coluna e cachorro ta em cima
+            return str(onca[0] - 2) + str(onca[1])
+
+        if onca[1] == cachorro[1] and onca[0] < cachorro[0] and onca[0] < 6:  # Estão na mesma coluna e cachorro ta em baixo
+            return str(onca[0] + 2) + str(onca[1])
+
+        if ((onca[0] - 1) == cachorro[0]) and ((onca[1] - 1) == cachorro[1]) and (onca[0] > 2 and onca[1] > 2):  # Diagonal esquerda pra cima
+            return str(onca[0] - 2) + str(onca[1] - 2)
+
+        if ((onca[0] - 1) == cachorro[0]) and ((onca[1] + 1) == cachorro[1]) and (onca[0] > 2 and onca[1] < 4):  # Diagonal direita pra cima
+            return str(onca[0] - 2) + str(onca[1] - 2)
+
+        if ((onca[0] + 1) == cachorro[0]) and ((onca[1] - 1) == cachorro[1]) and (onca[0] < 4 and onca[1] > 2):  # Diagonal esquerda pra baixo
+            return str(onca[0] + 2) + str(onca[1] - 2)
+        
+        if ((onca[0] + 1) == cachorro[0]) and ((onca[1] + 1) == cachorro[1]) and (onca[0] < 4 and onca[1] > 2):  # Diagonal direita pra baixo
+            return str(onca[0] + 2) + str(onca[1] + 2)
+
+        return None
+            
 if __name__ == "__main__":
     estado = Estado()
-    estado.tabuleiro['c3'][0] = 'o'
-    estado.tabuleiro['d3'][0] = 'C'
-    estado.tabuleiro['c4'][0] = 'o'
-    estado.tabuleiro['d4'][0] = '$'
-    print(estado.funcaoSucessora('d3', 1))
+    estado.tabuleiro['33'][0] = 'o'
+    estado.tabuleiro['43'][0] = 'C'
+    estado.tabuleiro['34'][0] = 'o'
+    estado.tabuleiro['44'][0] = '$'
+    print(estado.tabuleiro['44'])
+    print(estado._proximaCasa('75', '64'))
+    print(estado.funcaoSucessora('43', 1))
+    print(len(estado.funcaoSucessora('43', 1)))
