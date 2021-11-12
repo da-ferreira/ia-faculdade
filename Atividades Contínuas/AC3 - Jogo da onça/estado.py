@@ -44,7 +44,7 @@ class Estado:
             '75': ['o', '73', '64']
         }  
 
-    def funcaoSucessora(self, estado, jogador=0):
+    def funcaoSucessora(self, jogador=0):
         """
         Retorna todo os possiveis lugares que podem ser alcançados a partir do estado atual.
         jogador 0 é cachorro e 1 é onça.
@@ -66,6 +66,7 @@ class Estado:
                         estados.append(novoTabuleiro)
 
         else:  # Onça
+            estado = self.pegaPosicaoOnca()
             posicoes_onca = [posicao for posicao in self.tabuleiro[estado][1:] if self.tabuleiro[posicao][0] in 'o$']
             
             for position in posicoes_onca:
@@ -74,7 +75,7 @@ class Estado:
                 if novoTabuleiro[position][0] == '$':
                     proxima_casa = self._proximaCasa(estado, position)
 
-                    if proxima_casa is not None:
+                    if proxima_casa is not None and self.tabuleiro[proxima_casa][0] == 'o':
                         novoTabuleiro[estado][0] = 'o'
                         novoTabuleiro[position][0] = 'o'
                         novoTabuleiro[proxima_casa][0] = 'C'
@@ -187,6 +188,6 @@ if __name__ == "__main__":
     #print(estado.tabuleiro['44'])
     
     #print(estado.funcaoSucessora('', 0))
-    #print(len(estado.funcaoSucessora('', 0)))
+    print(len(estado.funcaoSucessora(1)))
 
-    print(estado.funcaoObjetivo())
+    #print(estado.funcaoObjetivo())

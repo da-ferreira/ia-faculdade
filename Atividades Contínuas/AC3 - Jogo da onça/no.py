@@ -28,19 +28,19 @@ class No:
     def heuristica(self, jogador=0):
         """
         Calcula a função heuristica para a onça e os cachorros.
-        Se jogador for 0 a função heuristica é para a ONÇA, se for 1 é para os CACHORROS
+        Se jogador for 1 a função heuristica é para a ONÇA, se for 0 é para os CACHORROS
         """
         
         heuristica = 0
 
-        if jogador == 0:  # Onca
+        if jogador == 1:  # Onca
             # Calcula se ele comeu algum cachorro
             qtd_cachorros = len(self.estado.pegaPosicoesCachorros())
 
             if qtd_cachorros == 9:  # Venceu o jogo
-                return 1000
+                return -1000
             else:
-                heuristica += ((14 - qtd_cachorros) * 10)
+                heuristica -= ((14 - qtd_cachorros) * 10)
             
             posicao_onca = self.estado.pegaPosicaoOnca()
             vizinhos_onca = self.estado.tabuleiro[posicao_onca][1:]
@@ -49,12 +49,12 @@ class No:
 
             for i in vizinhos_onca:
                 if self.estado.tabuleiro[i][0] == 'o':
-                    heuristica += 3            
+                    heuristica -= 3            
                     tem_vizinho_vazio = True
 
             if not tem_vizinho_vazio:
                 if self.estado.cachorrosVenceram():
-                    heuristica = -1000
+                    heuristica = 1000
 
         else:  # Cachorros
             if self.estado.cachorrosVenceram():
@@ -67,7 +67,6 @@ class No:
             heuristica += len(posicoes_cachorros) * 3
             posicao_onca = self.estado.pegaPosicaoOnca()
             
-
             for i in posicoes_cachorros:
                 if posicao_onca in self.estado.tabuleiro[i][1:]:
                     heuristica += 7
