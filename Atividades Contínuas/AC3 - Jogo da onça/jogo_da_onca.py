@@ -1,11 +1,4 @@
 
-"""
-Adendo
-
-Fazer uma função que retorna os cachorros disponiveis para jogar, ou seja, 
-aqueles que tem algum vizinho em branco.
-"""
-
 import os
 import math
 from time import sleep
@@ -24,6 +17,21 @@ auxilio_tabuleiro = [
     {"1": "A", "2": "B", "3": "C", "4": "D", "5": "E", "6": "F", "7": "G"}
 ]
 
+def cachorros_validos():
+    """ Retorna os cachorros que tem algum vizinho em branco 'o'. """
+    cachorros = jogo.estado.pegaPosicoesCachorros()
+    disponiveis = []
+
+    for cachorro in cachorros:
+        for vizinhos in jogo.estado.tabuleiro[cachorro][1:]:
+            if 'o' == jogo.estado.tabuleiro[vizinhos][0]:
+                disponiveis.append(cachorro)
+                break
+
+    disponiveis = [auxilio_tabuleiro[1][x[0]] + x[1] for x in disponiveis]
+    return disponiveis
+    
+
 os.system("cls")
 
 print(" ~> JOGO DA ONÇA <~ ")
@@ -38,12 +46,11 @@ print("\nNúmero de cachorros comidos pela onça: 0")
 
 while not game_over[0]:
     if turno == 1:
-        cachorros_disponiveis = jogo.estado.pegaPosicoesCachorros()
-        cachorros_disponiveis = [auxilio_tabuleiro[1][x[0]] + x[1] for x in cachorros_disponiveis]
+        cachorros_disponiveis = cachorros_validos()
         
         print("\nInforme a linha [A-G] e a coluna [1-5] do cachorro escolhido.")
         print(f"Cachorros disponíveis: {', '.join(cachorros_disponiveis)}")
-        peca = input(">> ")
+        peca = input(">> ").upper()
         
         if peca not in cachorros_disponiveis:
             raise Exception("Cachorro inválido.")
@@ -56,7 +63,7 @@ while not game_over[0]:
 
         print(f"\nInforme a linha [A-G] e a coluna [1-5] para colocar o cachorro {representacao_peca}.")
         print(f"Posições disponíveis: {', '.join(posicoes_disponiveis)}")
-        jogada = input(">> ")
+        jogada = input(">> ").upper()
 
         if jogada not in posicoes_disponiveis:
             raise Exception("Posição inválida.")
