@@ -6,23 +6,23 @@ class No:
         self.estado = estado
 
     def printTabuleiro(self):
-        print(f"1    {' - '.join([self.estado.tabuleiro[list(self.estado.tabuleiro.keys())[i]][0] for i in range(5)])}")
+        print(f"A    {' - '.join([self.estado.tabuleiro[list(self.estado.tabuleiro.keys())[i]][0] for i in range(5)])}")
         print("     | \ | / | \ | / |")
-        print(f"2    {' - '.join([self.estado.tabuleiro[list(self.estado.tabuleiro.keys())[i]][0] for i in range(5, 10)])}")
+        print(f"B    {' - '.join([self.estado.tabuleiro[list(self.estado.tabuleiro.keys())[i]][0] for i in range(5, 10)])}")
         print("     | / | \ | / | \ |")
-        print(f"3    {' - '.join([self.estado.tabuleiro[list(self.estado.tabuleiro.keys())[i]][0] for i in range(10, 15)])}")
+        print(f"C    {' - '.join([self.estado.tabuleiro[list(self.estado.tabuleiro.keys())[i]][0] for i in range(10, 15)])}")
         print("     | \ | / | \ | / |")
-        print(f"4    {' - '.join([self.estado.tabuleiro[list(self.estado.tabuleiro.keys())[i]][0] for i in range(15, 20)])}")
+        print(f"D    {' - '.join([self.estado.tabuleiro[list(self.estado.tabuleiro.keys())[i]][0] for i in range(15, 20)])}")
         print("     | / | \ | / | \ |")
-        print(f"5    {' - '.join([self.estado.tabuleiro[list(self.estado.tabuleiro.keys())[i]][0] for i in range(20, 25)])}")
+        print(f"E    {' - '.join([self.estado.tabuleiro[list(self.estado.tabuleiro.keys())[i]][0] for i in range(20, 25)])}")
         print("            /|\\")
         print("           / | \\")
         print("          /  |  \\")
-        print(f"6        {self.estado.tabuleiro['62'][0]} - {self.estado.tabuleiro['63'][0]} - {self.estado.tabuleiro['64'][0]}")
+        print(f"F        {self.estado.tabuleiro['62'][0]} - {self.estado.tabuleiro['63'][0]} - {self.estado.tabuleiro['64'][0]}")
         print("        /    |    \\")
         print("       /     |     \\")
         print("      /      |      \\")
-        print(f"7    {self.estado.tabuleiro['71'][0]} ----- {self.estado.tabuleiro['73'][0]} ----- {self.estado.tabuleiro['75'][0]}")
+        print(f"G    {self.estado.tabuleiro['71'][0]} ----- {self.estado.tabuleiro['73'][0]} ----- {self.estado.tabuleiro['75'][0]}")
         print("     1   2   3   4   5")
      
     def heuristica(self, jogador=0):
