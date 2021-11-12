@@ -110,30 +110,30 @@ class Estado:
 
         onca = [int(onca[0]), int(onca[1])]
         cachorro = [int(cachorro[0]), int(cachorro[1])]
-
-        if onca[0] == cachorro[0] and onca[1] < cachorro[1] and onca[1] < 4:  # Estão na mesma linha e cachorro ta na frente
-            return str(onca[0]) + str(onca[1] + 2)
         
-        if onca[0] == cachorro[0] and onca[1] > cachorro[1] and onca[1] > 2:  # Estão na mesma linha e cachorro ta na atras
+        if onca[0] == cachorro[0] and onca[1] < cachorro[1] and onca[1] < 4 and onca != [6, 3]:  # Estão na mesma linha e cachorro ta na frente
+            return str(onca[0]) + str(onca[1] + 2)####
+        
+        if onca[0] == cachorro[0] and onca[1] > cachorro[1] and onca[1] > 2 and onca != [6, 3]:  # Estão na mesma linha e cachorro ta na atras
             return str(onca[0]) + str(onca[1] - 2)
 
         if onca[1] == cachorro[1] and onca[0] > cachorro[0] and onca[0] > 2:  # Estão na mesma coluna e cachorro ta em cima
             return str(onca[0] - 2) + str(onca[1])
 
-        if onca[1] == cachorro[1] and onca[0] < cachorro[0] and onca[0] < 6:  # Estão na mesma coluna e cachorro ta em baixo
+        if onca[1] == cachorro[1] and onca[0] < cachorro[0] and onca[0] < 6 and onca not in [[4, 1], [4, 2], [4, 4], [4, 5]]:  # Estão na mesma coluna e cachorro ta em baixo
             return str(onca[0] + 2) + str(onca[1])
 
         if ((onca[0] - 1) == cachorro[0]) and ((onca[1] - 1) == cachorro[1]) and (onca[0] > 2 and onca[1] > 2):  # Diagonal esquerda pra cima
             return str(onca[0] - 2) + str(onca[1] - 2)
 
         if ((onca[0] - 1) == cachorro[0]) and ((onca[1] + 1) == cachorro[1]) and (onca[0] > 2 and onca[1] < 4):  # Diagonal direita pra cima
-            return str(onca[0] - 2) + str(onca[1] - 2)
+            return str(onca[0] - 2) + str(onca[1] + 2)
 
         if ((onca[0] + 1) == cachorro[0]) and ((onca[1] - 1) == cachorro[1]) and (onca[0] < 4 and onca[1] > 2):  # Diagonal esquerda pra baixo
             return str(onca[0] + 2) + str(onca[1] - 2)
         
-        if ((onca[0] + 1) == cachorro[0]) and ((onca[1] + 1) == cachorro[1]) and (onca[0] < 4 and onca[1] > 2):  # Diagonal direita pra baixo
-            return str(onca[0] + 2) + str(onca[1] + 2)
+        if ((onca[0] + 1) == cachorro[0]) and ((onca[1] + 1) == cachorro[1]) and (onca[0] < 4 and onca[1] < 4):  # Diagonal direita pra baixo
+            return str(onca[0] + 2) + str(onca[1] + 2)  # ##
 
         return None
             
@@ -166,8 +166,12 @@ class Estado:
         for i in vizinhos_onca:
             if self.tabuleiro[i][0] == "$":     
                 temp = self._proximaCasa(onca, i)
-                if temp is not None and self.tabuleiro[temp][0] == 'o' :
-                    posicoes_de_fuga_onca.append(temp)
+
+                try:
+                    if temp is not None and self.tabuleiro[temp][0] == 'o':
+                        posicoes_de_fuga_onca.append(temp)
+                except KeyError:
+                    print("Onca e cachorro:", temp, onca, i)
                 
         return len(posicoes_de_fuga_onca) == 0        
 

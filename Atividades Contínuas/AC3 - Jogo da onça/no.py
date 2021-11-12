@@ -38,7 +38,7 @@ class No:
             qtd_cachorros = len(self.estado.pegaPosicoesCachorros())
 
             if qtd_cachorros == 9:  # Venceu o jogo
-                return -1000
+                heuristica -= -100
             else:
                 heuristica -= ((14 - qtd_cachorros) * 10)
             
@@ -49,27 +49,33 @@ class No:
 
             for i in vizinhos_onca:
                 if self.estado.tabuleiro[i][0] == 'o':
-                    heuristica -= 3            
+                    heuristica -= 4            
                     tem_vizinho_vazio = True
 
             if not tem_vizinho_vazio:
                 if self.estado.cachorrosVenceram():
-                    heuristica = 1000
+                    heuristica += 100
 
         else:  # Cachorros
             if self.estado.cachorrosVenceram():
-                return 1000
+                heuristica += 100
 
             if self.estado.oncaVenceu():
-                return -1000
+                heuristica += -100
 
             posicoes_cachorros = self.estado.pegaPosicoesCachorros()
-            heuristica += len(posicoes_cachorros) * 3
+            heuristica += (len(posicoes_cachorros) * 2)
             posicao_onca = self.estado.pegaPosicaoOnca()
             
+            entrou = False
+
             for i in posicoes_cachorros:
                 if posicao_onca in self.estado.tabuleiro[i][1:]:
-                    heuristica += 7
+                    heuristica += 15
+                    entrou = True
+
+            if not entrou:
+                heuristica -= 5
 
         return heuristica
 

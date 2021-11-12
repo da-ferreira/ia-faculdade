@@ -4,7 +4,7 @@ from estado import Estado
 import random
 import math
 
-def mini_max_poda_alfa_beta(no, profundidade, alfa, beta, onca_ou_cachorros=0):  # Cachorros == 0, Onça == 1
+def mini_max_poda_alfa_beta(no, profundidade, alfa, beta, onca_ou_cachorros):  # Cachorros == 0, Onça == 1
     eh_no_terminal = no.estado.funcaoObjetivo()
 
     if profundidade == 0 or eh_no_terminal:
@@ -18,7 +18,7 @@ def mini_max_poda_alfa_beta(no, profundidade, alfa, beta, onca_ou_cachorros=0): 
             return (None, no.heuristica(onca_ou_cachorros))
 
     if onca_ou_cachorros == 0:  # Maximizador
-        jogadas_validas = no.estado.funcaoSucessora()
+        jogadas_validas = no.estado.funcaoSucessora(onca_ou_cachorros)
         valor = -math.inf
         melhor_jogada = No(random.choice(jogadas_validas))
 
@@ -38,7 +38,7 @@ def mini_max_poda_alfa_beta(no, profundidade, alfa, beta, onca_ou_cachorros=0): 
         return melhor_jogada, valor
 
     else:  # Minimizador
-        jogadas_validas = no.estado.funcaoSucessora()
+        jogadas_validas = no.estado.funcaoSucessora(onca_ou_cachorros)
         valor = math.inf
         melhor_jogada = No(random.choice(jogadas_validas))
 
