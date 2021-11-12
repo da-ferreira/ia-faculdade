@@ -1,4 +1,11 @@
 
+"""
+Adendo
+
+Fazer uma função que retorna os cachorros disponiveis para jogar, ou seja, 
+aqueles que tem algum vizinho em branco.
+"""
+
 import os
 import math
 from time import sleep
@@ -12,7 +19,10 @@ jogo = No(Estado())
 turno = 0
 game_over = [False, '']
 cachorros_comidos = 0
-auxilio_tabuleiro = {"A": "1", "B": "2", "C": "3", "D": "4", "E": "5", "F": "6", "G": "7"}
+auxilio_tabuleiro = [
+    {"A": "1", "B": "2", "C": "3", "D": "4", "E": "5", "F": "6", "G": "7"},
+    {"1": "A", "2": "B", "3": "C", "4": "D", "5": "E", "6": "F", "7": "G"}
+]
 
 os.system("cls")
 
@@ -28,11 +38,30 @@ print("\nNúmero de cachorros comidos pela onça: 0")
 
 while not game_over[0]:
     if turno == 1:
-        peca = input("\nInforme a linha [A-G] e a coluna [1-5] do cachorro escolhido: ")
-        peca = auxilio_tabuleiro[peca[0]] + peca[1]
+        cachorros_disponiveis = jogo.estado.pegaPosicoesCachorros()
+        cachorros_disponiveis = [auxilio_tabuleiro[1][x[0]] + x[1] for x in cachorros_disponiveis]
+        
+        print("\nInforme a linha [A-G] e a coluna [1-5] do cachorro escolhido.")
+        print(f"Cachorros disponíveis: {', '.join(cachorros_disponiveis)}")
+        peca = input(">> ")
+        
+        if peca not in cachorros_disponiveis:
+            raise Exception("Cachorro inválido.")
 
-        jogada = input("Informe a linha [A-G] e a coluna [1-5] para colocar o cachorro: ")
-        jogada = auxilio_tabuleiro[jogada[0]] + jogada[1]
+        representacao_peca = peca
+        peca = auxilio_tabuleiro[0][peca[0]] + peca[1]
+
+        posicoes_disponiveis = [posicao for posicao in jogo.estado.tabuleiro[peca][1:] if jogo.estado.tabuleiro[posicao][0] == 'o']
+        posicoes_disponiveis = [auxilio_tabuleiro[1][x[0]] + x[1] for x in posicoes_disponiveis]
+
+        print(f"\nInforme a linha [A-G] e a coluna [1-5] para colocar o cachorro {representacao_peca}.")
+        print(f"Posições disponíveis: {', '.join(posicoes_disponiveis)}")
+        jogada = input(">> ")
+
+        if jogada not in posicoes_disponiveis:
+            raise Exception("Posição inválida.")
+
+        jogada = auxilio_tabuleiro[0][jogada[0]] + jogada[1]
 
         jogo.estado.tabuleiro[peca][0] = 'o'
         jogo.estado.tabuleiro[jogada][0] = '$'
